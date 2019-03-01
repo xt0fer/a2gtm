@@ -3,7 +3,7 @@ var express = require('express')
     , bodyParser = require('body-parser')
     , methodOverride = require('method-override')
     , app = express()
-    , port = process.env.PORT || 3000
+    , port = process.env.PORT || 3000 // was 3000
     , router = express.Router()
     , log = require('./dev-logger.js')
     , cors = require('cors');
@@ -12,7 +12,7 @@ app.use(cors());
 
 var server = require('http').createServer(app);
 
-var ws = require('./ws.js')(server, true);
+// moved ws.js from here.
 
 app.use(express.static(__dirname + '/dist')); // set the static files location for the static html
 // app.use(express.static(__dirname + '/public')); // set the static files location /public/img will be /img for users
@@ -63,3 +63,5 @@ var boardRoutes = require('./api/routes/board.routes.js')(app);
 server.listen(port, function () {
   log('App running on port', port);
 });
+
+var ws = require('./ws.js')(server, true);

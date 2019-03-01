@@ -8,7 +8,12 @@ var mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
-mongoose.connect('mongodb://localhost/gtm');
+mongoose.connect('mongodb://localhost/gtm', {
+    useMongoClient: true,
+    socketTimeoutMS: 0,
+    keepAlive: true,
+    reconnectTries: 30
+  });
 
 app.use(cors());
 app.use(morgan('dev'));

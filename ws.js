@@ -2,12 +2,21 @@ var log = require('./dev-logger.js');
 
 module.exports = function(server, origins) {
     log("Running socket.io server");
-    var io = require('socket.io').listen(server);
+    var allowedOrigins = "http://localhost:* http://127.0.0.1:*";
+
+    var io = require('socket.io').listen(server, {
+        origins: allowedOrigins,
+    });
 
     if (origins) {
         io.set("origins", "*:*");
     }
-
+    // function onRequest(req,res){
+    //     res.writeHead(200, {
+    //     'Access-Control-Allow-Origin' : '*'
+    //     });
+    // };
+    
     io.on('connection', function(socket) {
         log('connected');
 
